@@ -1,6 +1,7 @@
 const React = require("react");
 const Form = require("./Form");
-const axios = require('axios');
+const axios = require("axios");
+const Picture = require("./Picture");
 
 class App extends React.Component {
 	constructor(props) {
@@ -9,6 +10,7 @@ class App extends React.Component {
 			picCount: 1,
 			animal: "shibes",
 			loading: false,
+			picUrls: [],
 		};
 		this.formChangeHandler = this.formChangeHandler.bind(this);
 		this.submitFormHandler = this.submitFormHandler.bind(this);
@@ -24,23 +26,28 @@ class App extends React.Component {
 		event.preventDefault();
 		const data = this.state;
 		delete data.loading;
+		delete data.picUrls;
 		this.setState({ loading: true });
 		axios({
 			method: "get",
-			url: `http://shibe.online/api/${data.animal}?count${data.picCount}`,
+			url: `http://shibe.online/api/${data.animal}?count=${
+				data.picCount
+			}`,
 		})
 			.then(response => {
-				alert(response);
+				console.log(response.data);
+				this.setState({ picUrls: response.data });
 			})
 			.catch(error => {
 				alert(error);
+				throw new Error(error);
 			})
-			.then(response => console.log(response[0]))
+			.then(() => this.setState({ loading: false }));
 	}
 
 	render() {
 		return (
-			<div>
+			<React.Fragment>
 				<h1>Wyszukiwarka zwierzaków</h1>
 				<Form
 					picCountVal={this.state.picCount}
@@ -48,7 +55,16 @@ class App extends React.Component {
 					onChange={this.formChangeHandler}
 					onSubmit={this.submitFormHandler}
 				/>
-			</div>
+				{this.state.loading ? (
+					<span>Ładowanie danych ...</span>
+				) : (
+					<div className="picture-wrapper">
+						{(this.state.picUrls || []).map(url => (
+							<Picture url={url} />
+						))}
+					</div>
+				)}
+			</React.Fragment>
 		);
 	}
 }

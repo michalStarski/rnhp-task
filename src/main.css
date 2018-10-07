@@ -1,0 +1,19 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.picture-wrapper {
+	display: grid;
+	width: 100vw;
+	grid-template-columns: repeat(3, 33%);
+	grid-gap: 1rem;
+	align-items: center;
+	justify-items: center;
+}
+
+.animal {
+	width: 80%;
+	height: 80%;
+}

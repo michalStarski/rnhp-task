@@ -1,6 +1,6 @@
 const React = require("react");
 
-module.exports = props => {
+const Form = props => {
 	return (
 		<form onSubmit={props.onSubmit} className="form">
 			<label htmlFor="pic-count">Ilość zdjęć</label>
@@ -30,3 +30,5 @@ module.exports = props => {
 		</form>
 	);
 };
+
+module.exports = Form;
