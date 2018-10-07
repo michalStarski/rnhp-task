@@ -4,6 +4,26 @@
 	box-sizing: border-box;
 }
 
+body {
+	background-image: url("./assets/leaves.png");
+}
+
+input,
+select,
+button {
+	margin-right: 1rem;
+}
+
+.inputs {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	flex-flow: column;
+	align-items: center;
+	background-color: #ffffff;
+	height: 10vh;
+}
+
 .picture-wrapper {
 	display: grid;
 	width: 100vw;

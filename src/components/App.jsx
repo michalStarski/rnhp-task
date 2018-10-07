@@ -24,43 +24,49 @@ class App extends React.Component {
 
 	submitFormHandler(event) {
 		event.preventDefault();
+		this.setState({ loading: true });
+		const randomOption = ["shibes", "cats", "birds"][
+			Math.floor(Math.random() * 3)
+		];
 		const data = this.state;
 		delete data.loading;
 		delete data.picUrls;
-		this.setState({ loading: true });
 		axios({
 			method: "get",
-			url: `http://shibe.online/api/${data.animal}?count=${
-				data.picCount
-			}`,
+			url: `http://shibe.online/api/${
+				data.animal === "random" ? randomOption : data.animal
+			}?count=${data.picCount}`,
 		})
 			.then(response => {
 				console.log(response.data);
-				this.setState({ picUrls: response.data });
+				this.setState({ picUrls: response.data, loading: false });
 			})
 			.catch(error => {
+				this.setState({ loading: false });
 				alert(error);
 				throw new Error(error);
-			})
-			.then(() => this.setState({ loading: false }));
+			});
 	}
 
 	render() {
 		return (
 			<React.Fragment>
-				<h1>Wyszukiwarka zwierzaków</h1>
-				<Form
-					picCountVal={this.state.picCount}
-					animalVal={this.state.animal}
-					onChange={this.formChangeHandler}
-					onSubmit={this.submitFormHandler}
-				/>
+				<div className="inputs">
+					<h1>Wyszukiwarka zwierzaków</h1>
+					<Form
+						picCountVal={this.state.picCount}
+						animalVal={this.state.animal}
+						onChange={this.formChangeHandler}
+						onSubmit={this.submitFormHandler}
+						loading={this.state.loading}
+					/>
+				</div>
 				{this.state.loading ? (
 					<span>Ładowanie danych ...</span>
 				) : (
 					<div className="picture-wrapper">
-						{(this.state.picUrls || []).map(url => (
-							<Picture url={url} />
+						{(this.state.picUrls || []).map((url, index) => (
+							<Picture key={index} url={url} />
 						))}
 					</div>
 				)}

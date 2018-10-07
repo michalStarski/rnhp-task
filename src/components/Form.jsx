@@ -26,7 +26,9 @@ const Form = props => {
 				<option value="birds">Ptaki</option>
 				<option value="random">Losowe</option>
 			</select>
-			<button type="submit">Szukaj</button>
+			<button disabled={props.loading} type="submit">
+				Szukaj
+			</button>
 		</form>
 	);
 };
