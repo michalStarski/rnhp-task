@@ -1,5 +1,7 @@
 # Animal search application
 
+![animalsearchapplication](screenshots/Screenshot_2018-10-07_13-37-19.png)
+
 To install this application:
 
 ```shell
