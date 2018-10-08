@@ -5,7 +5,7 @@
 To install this application:
 
 ```shell
-$ npm install
+$ npm install && npm run build
 ```
 
 You can also run this application via i.e. _http-server_ package
